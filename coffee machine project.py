@@ -1,5 +1,3 @@
-
-
 # Program requirement
 # 1. print report
 # 2. check resources are sufficient
@@ -23,3 +21,5 @@
 # What would you like?
 
 #TODO: 1. Print report of all coffee machine resources
+from MENU import resources
+print(resources)
