@@ -71,24 +71,25 @@ def check_coins():
     total = quarters*0.25 + dimes*0.1 + nickles*0.05 + pennies*0.01
     return total
 
-def report_resources():
+def report_resources(money):
     print(f"Water: {resources['water']}ml")
     print(f"Milk: {resources['milk']}ml")
     print(f"Coffee: {resources['coffee']}g")
+    print(f"Money: ${money:.2f}")
 
-
+money = 0
 machine_works = True
 while machine_works==True:
     select = input("What would you like? (espresso/latte/cappuccino): ").lower()
 
     if select == 'report':
-        report_resources()
-        money = check_coins()
-        print(f"Coins: ${money:.2}")
+        report_resources(money)
     elif select in MENU:
-        money = check_coins()
-        check_resources(select)
-        
+        inserted_money = check_coins()
+        money += inserted_money
+        #TypeError, because you're trying to add `inserted_money`, but instead of calling the `check_coins()` function, you're assigning it directly as `check_coins`, which is a reference to the function itself, not the result of the function call.
+        if check_resources(select):
+            print(f"Total money inserted: ${money:.2f}")
     elif select == 'off':
         machine_works = False
         
