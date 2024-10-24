@@ -4,37 +4,7 @@
 # 3. process coins
 # 4. check transaction successful?
 # 5. make coffee (deduct resources)
-MENU = {
-    "espresso": {
-        "ingredients": {
-            "water": 50,
-            "coffee": 18,
-        },
-        "cost": 1.5,
-    },
-    "latte": {
-        "ingredients": {
-            "water": 200,
-            "milk": 150,
-            "coffee": 24,
-        },
-        "cost": 2.5,
-    },
-    "capuccino": {
-        "ingredients": {
-            "water": 250,
-            "milk": 100,
-            "coffee": 24,
-        },
-        "cost": 3.8
-    }
-}
 
-resources = {
-    "water": 300,
-    "milk": 200,
-    "coffee": 100
-}
 # What would you like? (espresso/latte/cappuccino): report
 # Water: 300ml
 # Milk: 200ml
