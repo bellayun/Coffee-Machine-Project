@@ -59,12 +59,13 @@ def check_resources(drink):
             print(f"We do not have enough {item} for {drink}")
             return False
     print(f"We have enough resourcs for {drink}")
+    # Deduct the resources for the drink    
     for item in ingredients:
         # deduct resources
-        resources[item] = resources[item] - ingredients[item]
+        resources[item] -= ingredients[item]
     return True
 
-# check how much is inserted
+# check how much money is inserted
 def check_coins():
     quarters = int(input("How many quarters?: "))
     dimes = int(input("How many dimes?: "))
@@ -73,10 +74,16 @@ def check_coins():
     total = quarters*0.25 + dimes*0.1 + nickles*0.05 + pennies*0.01
     return total
 
-# Get the change
+# Deduct the cost of the drink from the total money and return the remaining balance
 def deduct_coins(drink, total_amount):
-    change = total_amount - MENU[drink]['cost']
-    print(f"You have ${change:.2f} left.")
+    cost = MENU[drink]['cost']
+    if total_amount >= cost:
+        remaining_money = total_amount
+        print(f"Drink cost ${cost:.2f}. You have ${remaining_money:.2f} left.")
+        return remaining_money
+    else:
+        print(f"Not enough money. {drink} costs ${cost:.2f}.")
+        return total_amount
 
 # report resources in the coffee machine
 def report_resources(money):
@@ -85,23 +92,57 @@ def report_resources(money):
     print(f"Coffee: {resources['coffee']}g")
     print(f"Money: ${money:.2f}")
 
-# main
-# set the money = 0, and machine_works = True
+# Initialise resources and menu
+resources = {
+    'water': 300,
+    'milk': 200,
+    'coffee': 100
+}
+
+MENU = {
+    'espresso': {
+        'ingredients': {
+            'water': 50,
+            'coffee': 18
+        },
+        'cost': 1.5,
+    },
+    'latte': {
+        'ingredients': {
+            'water': 200,
+            'milk': 150,
+            'coffee': 24,
+        },
+        'cost': 2.5,
+    },
+    'cappuccino': {
+        'ingredients': {
+            'water': 250,
+            'milk': 100,
+            'coffee': 24
+        },
+        'cost': 3.0
+    }
+}
+
+########## main ##########
 money = 0
 machine_works = True
-# while loop for while the machine is on, continue asking the user what would they like to drink
+
 while machine_works==True:
     select = input("What would you like? (espresso/latte/cappuccino): ").lower()
 
     if select == 'report':
         report_resources(money)
     elif select in MENU:
-        inserted_money = check_coins()
-        money += inserted_money
-        deduct_coins(drink=select, total_amount=money)
+        inserted_money = check_coins()    # Get total inserted money
+        money += inserted_money    # Add inserted money to total
+        
         #TypeError, because you're trying to add `inserted_money`, but instead of calling the `check_coins()` function, you're assigning it directly as `check_coins`, which is a reference to the function itself, not the result of the function call.
         if check_resources(select):
-            print(f"Total money inserted: ${money:.2f}")
+            money = deduct_coins(drink=select, total_amount=money)
+        else:
+            print("Not enough resources for your drink. Refunding money.")
     elif select == 'off':
         machine_works = False
         
