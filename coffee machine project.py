@@ -50,6 +50,7 @@ resources = {
 # Here is your latte. Enjoy!
 # What would you like?
 
+from machine_data import MENU, resources
 
 # check how much resources in the machine, and deduct right amount depending on the drink you choose
 def check_resources(drink):
@@ -92,38 +93,6 @@ def report_resources(money):
     print(f"Coffee: {resources['coffee']}g")
     print(f"Money: ${money:.2f}")
 
-# Initialise resources and menu
-resources = {
-    'water': 300,
-    'milk': 200,
-    'coffee': 100
-}
-
-MENU = {
-    'espresso': {
-        'ingredients': {
-            'water': 50,
-            'coffee': 18
-        },
-        'cost': 1.5,
-    },
-    'latte': {
-        'ingredients': {
-            'water': 200,
-            'milk': 150,
-            'coffee': 24,
-        },
-        'cost': 2.5,
-    },
-    'cappuccino': {
-        'ingredients': {
-            'water': 250,
-            'milk': 100,
-            'coffee': 24
-        },
-        'cost': 3.0
-    }
-}
 
 ########## main ##########
 money = 0
